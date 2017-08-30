@@ -1,0 +1,41 @@
+.JVM Analisys
+
+https://github.com/hodrigohamalho/fis-rest[Fuse integration Services Application] used here is a simple order application 
+with a CRUD implemented.
+
+Load Test: Test 100 users, 10 RPS.
+
+
+|===
+|Technology | Memory (Zero Tuning) | Memory (-XX:MaxRAM=100m) | Memory (-XX:MaxRAM=200m)
+
+|FIS (Spring Boot) non container
+| TOTAL: 1028 -> 5782
+
+ HEAP: 719 -> 4194
+
+ Class: 76 -> 1116
+
+ Code: 28 -> 254
+ 
+ Thread: 29
+
+| GC overhead limit exceeded
+
+| TOTAL: 315 -> 1583
+
+Heap: 102 -> 102
+
+  Class: 79 -> 1121
+
+  Code: 26 inicial
+        36 -> 256
+
+  Thread: 29 inicial
+          69 -> 69
+
+|Camel vanila
+| 100%
+
+|Vertx
+|100%
