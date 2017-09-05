@@ -133,5 +133,5 @@ image::docs/locust-setup.png[]
 
 The metrics was collected using Java Memory Tracking jdk tool with the option summary. 
 
-To simplify the collect proccess I developed this tool https://github.com/hodrigohamalho/jmt-crawler
+To simplify the collect proccess I developed this tool https://github.com/hodrigohamalho/jmt-analyzer
 
