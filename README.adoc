@@ -7,6 +7,12 @@ The objective of this report is compare memory usage by Apache Camel in a simple
  * Camel with Jetty 
  * Vertx (no camel) - I tested with Vertx to compare the memory consumption with a non camel application.
 
+ All data was collected with 10 request per second of load.
+
+== Report Summary 
+
+image::docs/summary.png[]
+
 == Hardware spec
 
 The test was did using one Macbook Pro (Retina, 13-inch, Late 2013):
@@ -21,7 +27,7 @@ The test was did using one Macbook Pro (Retina, 13-inch, Late 2013):
 
 == Load Test
 
-The testing tool used here was http://locust.io/[Locust]. All data was collected with a 10 request per second load. 
+The testing tool used was http://locust.io/[Locust]. All data was collected with a 10 request per second load. 
 
 To run the load test use:
 
@@ -35,7 +41,7 @@ image::docs/locust-setup.png[]
 
 == Fuse Integration Services (Spring Boot)
 
-Project: jvm-analisys/fis-rest 
+Project: link:jvm-analisys/fis-rest[]
 
 === No tuning
 
@@ -74,3 +80,4 @@ Result: GC overhead limit exceeded.
       export MAVEN_OPTS="-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m"; mvn jetty:run -Dimpl=java-rest-dsl
 
 image::docs/camel-jetty-maxram200.png[]
+
