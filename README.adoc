@@ -57,11 +57,11 @@ Project: link:jvm-analisys/fis-rest[]
 
 image::docs/locust-fis-zero-tuning.png[]
 
-=== Running with 100 MB
+=== Running with MaxRAM=100m
 
       export MAVEN_OPTS='-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m'; mvn spring-boot:run
 
-=== Running with 200 MB
+=== Running with MaxRAM=200m
 
       export MAVEN_OPTS='-XX:NativeMemoryTracking=summary -XX:MaxRAM=200m'; mvn spring-boot:run
 
@@ -71,23 +71,49 @@ image::docs/locust-fis-maxram200.png[]
 
 Project: jvm-analisys/camel-examples/camel-example-restlet-jdbc
 
+load database
+
+      for i in {1..50}
+      do
+            curl -X POST -d "firstName=test&lastName=person" http://localhost:8080/rs/persons;
+      done
+
 === No tuning
 
       export MAVEN_OPTS="-XX:NativeMemoryTracking=summary"; mvn jetty:run -Dimpl=java-rest-dsl
 
 image::docs/camel-jetty-no-tuning.png[]
 
-=== Running with 100 MB
+=== Running with MaxRAM=100m
 
       export MAVEN_OPTS="-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m"; mvn jetty:run -Dimpl=java-rest-dsl
 
 Result: GC overhead limit exceeded.
 
-=== Running with 200 MB
+=== Running with MaxRAM=200m
 
       export MAVEN_OPTS="-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m"; mvn jetty:run -Dimpl=java-rest-dsl
 
 image::docs/camel-jetty-maxram200.png[]
+
+=== Vertx 
+
+The sample used in vertx is the following: 
+link:/web-examples/src/main/java/io/vertx/example/web/rest/SimpleREST.java[]
+
+I ran the class direct by the IDE (main method).
+
+=== No tuning
+
+image::docs/locust-vertx-no-tuning.png[]
+
+=== Running with MaxRAM=100m
+
+image::docs/locust-vertx-maxram100.png[]
+
+=== Running with MaxRAM=200m
+
+image::docs/locust-vertx-maxram200.png[]
 
 == Load Test
 

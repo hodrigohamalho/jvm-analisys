@@ -97,9 +97,9 @@ public class SimpleREST extends AbstractVerticle {
   }
 
   private void setUpInitialData() {
-    addProduct(new JsonObject().put("id", "prod3568").put("name", "Egg Whisk").put("price", 3.99).put("weight", 150));
-    addProduct(new JsonObject().put("id", "prod7340").put("name", "Tea Cosy").put("price", 5.99).put("weight", 100));
-    addProduct(new JsonObject().put("id", "prod8643").put("name", "Spatula").put("price", 1.00).put("weight", 80));
+    for (int i=0; i<50; i++){
+    	addProduct(new JsonObject().put("id", "prod"+i).put("name", "Spatula"+i).put("price", 1.00).put("weight", 80));
+    }
   }
 
   private void addProduct(JsonObject product) {
