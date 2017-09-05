@@ -1,41 +1,76 @@
-.JVM Analisys
+= JVM Camel Analisys
 
-https://github.com/hodrigohamalho/fis-rest[Fuse integration Services Application] used here is a simple order application 
-with a CRUD implemented.
+The objective of this report is compare memory usage by Apache Camel in a simple route, this simple route expose a CRUD
+ rest operation with 50 objects persisted in a IMDB in different scenarios.
 
-Load Test: Test 100 users, 10 RPS.
+ * Camel with Spring Boot
+ * Camel with Jetty 
+ * Vertx (no camel) - I tested with Vertx to compare the memory consumption with a non camel application.
 
+== Hardware spec
 
-|===
-|Technology | Memory (Zero Tuning) | Memory (-XX:MaxRAM=100m) | Memory (-XX:MaxRAM=200m)
+The test was did using one Macbook Pro (Retina, 13-inch, Late 2013):
 
-|FIS (Spring Boot) non container
-| TOTAL: 1028 -> 5782
+      macOS Sierra (Version 10.12.6)
+      Processor 2,8 GHz Intel Core i7
+      Memory 16 GB 1600 MHz DDR3
 
- HEAP: 719 -> 4194
+* Java version "1.8.0_131"
 
- Class: 76 -> 1116
+* Apache Maven 3.5.0
 
- Code: 28 -> 254
- 
- Thread: 29
+== Load Test
 
-| GC overhead limit exceeded
+The testing tool used here was http://locust.io/[Locust]. All data was collected with a 10 request per second load. 
 
-| TOTAL: 315 -> 1583
+To run the load test use:
 
-Heap: 102 -> 102
+      locust -f <project-path>/load-test.py --host=http://localhost:8080
 
-  Class: 79 -> 1121
+After that access the web console: http://localhost:8089/
 
-  Code: 26 inicial
-        36 -> 256
+I used 100 users with 1 of hatch rate.
 
-  Thread: 29 inicial
-          69 -> 69
+image::docs/locust-setup.png[]
 
-|Camel vanila
-| 100%
+== Fuse Integration Services (Spring Boot)
 
-|Vertx
-|100%
+Project: jvm-analisys/fis-rest 
+
+=== No tuning
+
+      export MAVEN_OPTS='-XX:NativeMemoryTracking=summary'; mvn spring-boot:run
+
+image::docs/locust-fis-zero-tuning.png[]
+
+=== Running with 100 MB
+
+      export MAVEN_OPTS='-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m'; mvn spring-boot:run
+
+=== Running with 200 MB
+
+      export MAVEN_OPTS='-XX:NativeMemoryTracking=summary -XX:MaxRAM=200m'; mvn spring-boot:run
+
+image::docs/locust-fis-maxram200.png[]
+
+== Camel with Jetty
+
+Project: jvm-analisys/camel-examples/camel-example-restlet-jdbc
+
+=== No tuning
+
+      export MAVEN_OPTS="-XX:NativeMemoryTracking=summary"; mvn jetty:run -Dimpl=java-rest-dsl
+
+image::docs/camel-jetty-no-tuning.png[]
+
+=== Running with 100 MB
+
+      export MAVEN_OPTS="-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m"; mvn jetty:run -Dimpl=java-rest-dsl
+
+Result: GC overhead limit exceeded.
+
+=== Running with 200 MB
+
+      export MAVEN_OPTS="-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m"; mvn jetty:run -Dimpl=java-rest-dsl
+
+image::docs/camel-jetty-maxram200.png[]
