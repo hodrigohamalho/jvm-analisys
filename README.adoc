@@ -7,7 +7,7 @@ The objective of this report is compare memory usage by Apache Camel in a simple
  * Camel with Jetty 
  * Vertx (no camel) - I tested with Vertx to compare the memory consumption with a non camel application.
 
- All data was collected with 10 request per second of load.
+All data was collected with 10 request per second of load.
 
 == Report Summary 
 
