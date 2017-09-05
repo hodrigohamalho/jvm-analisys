@@ -19,7 +19,7 @@ All data was collected with 10 request per second of load.
 
 https://docs.google.com/spreadsheets/d/1caaOZi7Fv3PPgredBUVKtDgxsf200mlzJNgFMWpH4NE/edit#gid=0[You could visualize this spread sheet here].
 
-image::docs/summary.png[]
+image::docs/summary1.png[]
 
 === Result with no tuning
 
