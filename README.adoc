@@ -9,9 +9,30 @@ The objective of this report is compare memory usage by Apache Camel in a simple
 
 All data was collected with 10 request per second of load.
 
+== Execution flow
+
+. Run the application
+. Run the load test 
+. Collect the metrics
+
 == Report Summary 
 
+https://docs.google.com/spreadsheets/d/1caaOZi7Fv3PPgredBUVKtDgxsf200mlzJNgFMWpH4NE/edit#gid=0[You could visualize this spread sheet here].
+
 image::docs/summary.png[]
+
+=== Result with no tuning
+
+image::docs/memory-no-tuning.png[]
+
+=== Result with MaxRAM=100m
+
+image::docs/memory-maxram100.png[]
+
+=== Result with MaxRAM=300m
+
+image::docs/memory-maxram200.png[]
+
 
 == Hardware spec
 
@@ -25,23 +46,10 @@ The test was did using one Macbook Pro (Retina, 13-inch, Late 2013):
 
 * Apache Maven 3.5.0
 
-== Load Test
-
-The testing tool used was http://locust.io/[Locust]. All data was collected with a 10 request per second load. 
-
-To run the load test use:
-
-      locust -f <project-path>/load-test.py --host=http://localhost:8080
-
-After that access the web console: http://localhost:8089/
-
-I used 100 users with 1 of hatch rate.
-
-image::docs/locust-setup.png[]
-
 == Fuse Integration Services (Spring Boot)
 
 Project: link:jvm-analisys/fis-rest[]
+
 
 === No tuning
 
@@ -80,4 +88,24 @@ Result: GC overhead limit exceeded.
       export MAVEN_OPTS="-XX:NativeMemoryTracking=summary -XX:MaxRAM=100m"; mvn jetty:run -Dimpl=java-rest-dsl
 
 image::docs/camel-jetty-maxram200.png[]
+
+== Load Test
+
+The testing tool used was http://locust.io/[Locust]. All data was collected with a 10 request per second load. 
+
+To run the load test use:
+
+      locust -f <project-path>/load-test.py --host=http://localhost:8080
+
+After that access the web console: http://localhost:8089/
+
+I used 100 users with 1 of hatch rate.
+
+image::docs/locust-setup.png[]
+
+== Collect metrics
+
+The metrics was collected using Java Memory Tracking jdk tool with the option summary. 
+
+To simplify the collect proccess I developed this tool https://github.com/hodrigohamalho/jmt-crawler
 
